@@ -1,0 +1,8 @@
+{
+    "fulfillmentText": "Here are the speed test results:",
+    "fulfillmentMessages": {
+        "Latency": "1.021954ms",
+        "Download": "767.33 Mbit/s",
+        "Upload": "463.73 Mbit/s"
+    }
+}
