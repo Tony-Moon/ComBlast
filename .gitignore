@@ -17,3 +17,4 @@
 # Passwords and Keys
 config.txt
 *.pem
+*.key
