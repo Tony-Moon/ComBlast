@@ -15,7 +15,7 @@
 
 const http = require('http');
 const functions = require('firebase-functions');
-const host = 'http://ec2-54-92-157-95.compute-1.amazonaws.com/webhook';
+const host = 'http://ec2-54-92-157-95.compute-1.amazonaws.com';
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((req, res) => {
 	

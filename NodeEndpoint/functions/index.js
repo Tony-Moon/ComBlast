@@ -19,7 +19,8 @@ limitations under the License.
 
 const http = require('http');
 const functions = require('firebase-functions');
-const host = 'http://ec2-54-92-157-95.compute-1.amazonaws.com/webhook';
+const host = 'http://ec2-54-92-157-95.compute-1.amazonaws.com';
+const path = '/webhook';
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest((req, res) => {
 	// Call the speed test API
@@ -37,10 +38,10 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((req, res) => 
 function callSpeedTestAPI(host) {
 	return new Promise((resolve, reject) => {
     // Create the path for the HTTP request to get the results of the speed test
-    console.log('API Request: ' + host); 
+    console.log('API Request: ' + host + path); 
 
     // Make the HTTP request to get the results of the speed test
-    http.get({host: host}, (res) => {
+    http.get({host: host, path: path}, (res) => {
 		// body will store the response chunks
 		let body = ''; 
 		res.setEncoding('utf8');
@@ -50,18 +51,22 @@ function callSpeedTestAPI(host) {
 
 		// After all the data has been received parse the JSON for desired data
 		res.on('end', () =>{
-			let response = JSON.parse(body);
-			console.log(body);
+			let speed = body.substring(19, 25);
+			let output = 'The download speed is ' + speed
+				+ 'Megabits per second. Would you like to be connected with a representative?';
+
 			// Resolve the promise with the output text
+			let response = JSON.parse(output);
+			console.log(output);
 			console.log(response);
-			resolve(body);
-		});
+			resolve(output);
+			});
 
 		// Error handling 
 		res.on('error', (error) => {
 			console.log(`Error calling the speed test API: ${error}`);
 			reject();
+			});
 		});
-	});
-  });
+  	});
 }
